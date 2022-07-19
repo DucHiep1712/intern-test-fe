@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import cogoToast from 'cogo-toast'
 import axios from 'axios'
-import './App.scss';
+import './App.scss'
 
 function App() {
   const [details, setDetails] = useState({ username: '', password: '' })
@@ -16,7 +16,7 @@ function App() {
   const passwordRef = useRef()
   const navigate = useNavigate()
 
-  const login = details => {
+  const login = (details) => {
     if (details.username === '') {
       //Người dùng chưa điền tài khoản
       cogoToast.error('Vui lòng điền tài khoản')
@@ -25,26 +25,34 @@ function App() {
       cogoToast.error('Vui lòng nhập mật khẩu')
     } else {
       // Gửi request kiểm tra chính chủ
-      axios.post('http://localhost:8080/web-student-tracker/login', {
+      axios
+        .post('http://localhost:8080/student_management/login', {
           username: details.username,
-          password: details.password
-      }).then(res => {
-          localStorage.setItem('user-info', JSON.stringify({
-              id: res.data.id,
-              firstName: res.data.firstName,
-              lastName: res.data.lastName,
-              role: res.data.role
-          }))
-          navigate('/home');
-      }).catch(() => {
-          cogoToast.error('Tài khoản hoặc mật khẩu không đúng')
-      })
+          password: details.password,
+        })
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.status === 'success') {
+            localStorage.setItem(
+              'user-info',
+              JSON.stringify({
+                role: res.data.role,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                email: res.data.email,
+                phone: res.data.phone,
+              })
+            )
+            navigate('/home')
+          } else {
+            cogoToast.error('Tài khoản hoặc mật khẩu không đúng')
+          }
+        })
     }
-
   }
 
   //Xử lý đăng nhập
-  const submitHandler = e => {
+  const submitHandler = (e) => {
     e.preventDefault()
 
     login(details)
@@ -77,16 +85,16 @@ function App() {
 
   return (
     <div class='login-form-container'>
-
       <form onSubmit={submitHandler} className='login-form'>
         <div className='form-content'>
           <h3>Phần mềm quản lý sinh viên</h3>
           <h2>Xin chào</h2>
           {/* Error */}
-          <div className={`form-group
+          <div
+            className={`form-group
                     form-username
-                    ${usernameActive && 'focus'}`
-          }>
+                    ${usernameActive && 'focus'}`}
+          >
             <div className='i-container'>
               <FontAwesomeIcon icon={faUser} />
             </div>
@@ -97,20 +105,23 @@ function App() {
                 type='username'
                 name='username'
                 id='username'
-                onChange={e => setDetails({
-                  ...details,
-                  username: e.target.value
-                })}
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    username: e.target.value,
+                  })
+                }
                 value={details.username}
                 onFocus={usernameFocusHandler}
                 onBlur={usernameBlurHandler}
               />
             </div>
           </div>
-          <div className={`form-group
+          <div
+            className={`form-group
                     form-pass
-                    ${passActive && 'focus'}`
-          }>
+                    ${passActive && 'focus'}`}
+          >
             <div className='i-container'>
               <FontAwesomeIcon icon={faLock} />
             </div>
@@ -121,10 +132,12 @@ function App() {
                 type='password'
                 name='password'
                 id='password'
-                onChange={e => setDetails({
-                  ...details,
-                  password: e.target.value
-                })}
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    password: e.target.value,
+                  })
+                }
                 value={details.password}
                 onFocus={passFocusHandler}
                 onBlur={passBlurHandler}
@@ -132,27 +145,28 @@ function App() {
             </div>
           </div>
           <div className='remember-me'>
-            <FormControlLabel control={<Checkbox
-              sx={{
-                color: '#e85a4f',
-                '&.Mui-checked': {
-                  color: '#e85a4f',
-                },
-              }}
-              size='small'
-            />} label='Ghi nhớ'/>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  sx={{
+                    color: '#e85a4f',
+                    '&.Mui-checked': {
+                      color: '#e85a4f',
+                    },
+                  }}
+                  size='small'
+                />
+              }
+              label='Ghi nhớ'
+            />
           </div>
           <div className='divider'></div>
-          <input
-            type='submit'
-            value='Đăng nhập'
-            className='login-submit-btn'
-          />
+          <input type='submit' value='Đăng nhập' className='login-submit-btn' />
         </div>
       </form>
       <img src={require('./Teaching-amico.png')} alt='Teaching amico' />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

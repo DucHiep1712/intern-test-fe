@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 @mixin makeCenter {
   display: flex;
@@ -41,7 +41,7 @@
     text-transform: uppercase;
     font-size: 2.9rem;
   }
-  
+
   h3 {
     @include makeCenter();
 
@@ -67,7 +67,7 @@
         transform: translateY(-2rem);
         color: $taupe;
         font-size: 18px;
-        transition: .3s;
+        transition: 0.3s;
       }
 
       & > input {
@@ -90,23 +90,25 @@
       left: 50%;
     }
 
-    &::before, &::after {
-      content: '';
+    &::before,
+    &::after {
+      content: "";
       position: absolute;
       bottom: -2px;
       width: 0%;
       height: 2px;
       background-color: $jelly-bean;
-      transition: .4s;
+      transition: 0.4s;
     }
 
     &.focus {
-      &::before, &::after {
+      &::before,
+      &::after {
         width: 50%;
       }
 
       & > div > h5 {
-        top: -.8rem;
+        top: -0.8rem;
         font-size: 14px;
       }
     }
@@ -116,7 +118,7 @@
     align-self: center;
     color: $taupe;
     font-size: 16px;
-    margin-left: .1rem;
+    margin-left: 0.1rem;
   }
 
   .divider {
@@ -126,16 +128,15 @@
   }
 }
 
-
 .i-container {
   color: $peach;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 
   & > i {
-    transition: .3s;
+    transition: 0.3s;
   }
 }
 

@@ -61,6 +61,7 @@
                     border-radius: 50%;
                     border-color: transparent;
                     transition: all .3s ease;
+                    z-index: 10;
 
                     &:hover {
                         background-color: $eggshell;
@@ -69,5 +70,17 @@
                 }
             }
         }
+    }
+}
+
+span {
+    padding: 8px;
+    border-radius: 12px;
+    background-color: $eggshell;
+    transition: all .1s ease-in-out;
+
+    &:hover, &:focus {
+        padding-top: 4px;
+        padding-right: 2rem;
     }
 }

@@ -11,7 +11,7 @@ function Info() {
 
     const handleModifyInfoFinish = () => {
         axios
-            .put('http://localhost:8080/student_management/modify', {
+            .put('http://https://heroku-student-mysql.herokuapp.com/modify', {
                 modifyType: 'self',
                 id: userInfo.id.toString(),
                 username: 'username',

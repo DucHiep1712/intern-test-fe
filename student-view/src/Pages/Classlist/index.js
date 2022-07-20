@@ -36,7 +36,7 @@ function Classlist() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/student_management/user')
+            .get('https://heroku-student-mysql.herokuapp.com/user')
             .then((res) => {
                 setUserList(res.data.users)
             })
@@ -57,7 +57,7 @@ function Classlist() {
 
     const handleModifyFinish = () => {
         axios
-            .put('http://localhost:8080/student_management/modify', {
+            .put('https://heroku-student-mysql.herokuapp.com/modify', {
                 modifyType: 'student',
                 id: currentToggled.id.toString(),
                 username: currentToggled.username,

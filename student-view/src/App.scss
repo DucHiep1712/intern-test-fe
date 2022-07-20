@@ -64,7 +64,7 @@
       & > h5 {
         position: absolute;
         top: 0;
-        transform: translateY(-2rem);
+        transform: translateY(0);
         color: $taupe;
         font-size: 18px;
         transition: 0.3s;
@@ -108,7 +108,7 @@
       }
 
       & > div > h5 {
-        top: -0.8rem;
+        top: -1.2rem;
         font-size: 14px;
       }
     }

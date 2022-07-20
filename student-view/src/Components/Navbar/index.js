@@ -33,7 +33,7 @@ function Navbar() {
                         <NavLink exact={true} to='/classlist' className='nav-link'>Danh sách</NavLink>
                     </li>
                     <li className='four'>
-                        <NavLink exact={true} to='/' className='nav-link'>Đăng xuất</NavLink>
+                        <NavLink exact={true} to='/' className='nav-link' onClick={() => localStorage.clear()}>Đăng xuất</NavLink>
                     </li>
                     <hr />
                 </ul>

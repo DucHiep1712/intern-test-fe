@@ -1,7 +1,7 @@
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
 import './CardItem.scss'
 
-function CardItem() {
+function CardItem(props) {
     return (
         <Card sx={{ maxWidth: 300 }}>
             <CardActionArea>
@@ -12,9 +12,9 @@ function CardItem() {
                 />
                 <CardContent>
                     <Typography variant='body2' color='#9e9d8a'>
-                        <span className='name'>Nguyễn Đức Hiệp</span>
+                    <span className='name'>{props.name}</span>
                         <br />
-                        Truy cập 10 phút trước
+                        Truy cập lúc {props.time}
                     </Typography>
                 </CardContent>
             </CardActionArea>

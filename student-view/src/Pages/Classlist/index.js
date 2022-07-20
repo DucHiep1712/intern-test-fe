@@ -58,17 +58,21 @@ function Classlist() {
     const handleModifyFinish = () => {
         axios
             .put('http://localhost:8080/student_management/modify', {
+                modifyType: 'student',
                 id: currentToggled.id.toString(),
                 username: currentToggled.username,
                 password: currentToggled.password,
-                firstName: currentToggled.first_name,
-                lastName: currentToggled.last_name,
+                firstName: currentToggled.first_name.trim(),
+                lastName: currentToggled.last_name.trim(),
                 email: currentToggled.email,
                 phone: currentToggled.phone,
                 role: currentToggled.role,
             })
         setModifyOpen(false)
         setOpen(false)
+        cogoToast.loading('Đang cập nhật...')
+        window.setTimeout(() => cogoToast.success('Thành công'), 1300)
+        window.setTimeout(() => window.location.reload(), 1500)
     }
 
     return (
@@ -96,10 +100,12 @@ function Classlist() {
                         <p id='parent-modal-description'>
                             Họ và tên: {currentToggled.first_name + ' ' + currentToggled.last_name}
                             <br />
-                            {userInfo.role === 'teacher' && `Tài khoản: ${currentToggled.username}`}
-                            {userInfo.role === 'teacher' && (<br />)}
-                            {userInfo.role === 'teacher' && `Mật khẩu: ${currentToggled.password}`}
-                            {userInfo.role === 'teacher' && (<br />)}
+                            {userInfo.role === 'teacher' && <>
+                                Tài khoản:  {currentToggled.username}
+                                <br />
+                                Mật khẩu: {currentToggled.password}
+                                <br />
+                            </>}
                             Email: {currentToggled.email}
                             <br />
                             Điện thoại: {currentToggled.phone}
@@ -120,24 +126,26 @@ function Classlist() {
                         <p id='parent-modal-description'>
                             <label>Họ và tên:&nbsp;</label>
                             <span
+                                className='classlist-span'
                                 contentEditable={true}
-                                onInput={event => {
+                                onBlur={event => {
                                     const nameSplit = event.currentTarget.textContent.lastIndexOf(' ')
                                     const firstName = event.currentTarget.textContent.substring(0, nameSplit)
                                     const lastName = event.currentTarget.textContent.substring(nameSplit + 1)
-                                    setCurrentToggled({...currentToggled, first_name: firstName, last_name: lastName})
-                                    setModifyButton(true)
+                                    setCurrentToggled({ ...currentToggled, first_name: firstName, last_name: lastName })
                                 }}
+                                onInput={() => setModifyButton(true)}
                             >
                                 {currentToggled.first_name + ' ' + currentToggled.last_name}
                             </span>
                             <br />
                             <label>Tài khoản:&nbsp;</label>
                             <span
+                                className='classlist-span'
                                 contentEditable='true'
                                 onInput={event => {
                                     const username = event.currentTarget.textContent
-                                    setCurrentToggled({...currentToggled, username: username})
+                                    setCurrentToggled({ ...currentToggled, username: username })
                                     setModifyButton(true)
                                 }}
                             >
@@ -146,10 +154,11 @@ function Classlist() {
                             <br />
                             <label>Mật khẩu:&nbsp;</label>
                             <span
+                                className='classlist-span'
                                 contentEditable='true'
                                 onInput={event => {
                                     const password = event.currentTarget.textContent
-                                    setCurrentToggled({...currentToggled, password: password})
+                                    setCurrentToggled({ ...currentToggled, password: password })
                                     setModifyButton(true)
                                 }}
                             >
@@ -158,10 +167,11 @@ function Classlist() {
                             {userInfo.role === 'teacher' && (<br />)}
                             <label>Email:&nbsp;</label>
                             <span
+                                className='classlist-span'
                                 contentEditable='true'
                                 onInput={event => {
                                     const email = event.currentTarget.textContent
-                                    setCurrentToggled({...currentToggled, email: email})
+                                    setCurrentToggled({ ...currentToggled, email: email })
                                     setModifyButton(true)
                                 }}
                             >
@@ -170,10 +180,11 @@ function Classlist() {
                             <br />
                             <label>Điện thoại:&nbsp;</label>
                             <span
+                                className='classlist-span'
                                 contentEditable='true'
                                 onInput={event => {
                                     const phone = event.currentTarget.textContent
-                                    setCurrentToggled({...currentToggled, phone: phone})
+                                    setCurrentToggled({ ...currentToggled, phone: phone })
                                     setModifyButton(true)
                                 }}
                             >
@@ -185,6 +196,7 @@ function Classlist() {
                             children='Hoàn tất'
                             buttonStyle='btn--primary'
                             buttonSize='btn--extra--large'
+                            buttonDisable={!modifyButton}
                             onClick={() => handleModifyFinish()}
                         />
                     </Box>

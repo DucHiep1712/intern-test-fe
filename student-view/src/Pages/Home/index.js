@@ -9,7 +9,7 @@ import './Home.scss'
 
 function Home() {
     const [cookies, setCookie] = useCookies(['recent_user'])
-    const recentUser = cookies.recent_user
+    const recentUser = (cookies.recent_user !== undefined ? cookies.recent_user : [])
     console.log(recentUser)
 
     return (
@@ -26,7 +26,7 @@ function Home() {
                             modules={[Navigation]}
                             className='mySwiper'
                         >
-                            {recentUser.map((item, index) => (
+                            {recentUser && recentUser.map((item, index) => (
                                 <SwiperSlide>
                                     <CardItem
                                         key={index}

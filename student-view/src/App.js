@@ -28,7 +28,7 @@ function App() {
     } else {
       // Gửi request kiểm tra chính chủ
       axios
-        .post('http://localhost:8080/student_management/login', {
+        .post('https://heroku-student-mysql.herokuapp.com/login', {
           username: details.username,
           password: details.password,
         })
@@ -50,9 +50,9 @@ function App() {
               recentUser = cookies.recent_user
             }
             var today = new Date()
-            const logintime = today.getHours() + ':' + today.getMinutes() + ' ngày ' + today.getDate() +  '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
+            const logintime = today.getHours() + ':' + today.getMinutes() + ' ngày ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
             if (!recentUser.find(item => item.name === res.data.firstName + ' ' + res.data.lastName)) {
-              recentUser = [...recentUser, {name: res.data.firstName + ' ' + res.data.lastName, time: logintime}]
+              recentUser = [...recentUser, { name: res.data.firstName + ' ' + res.data.lastName, time: logintime }]
             } else {
               recentUser.forEach(item => {
                 if (item.name === res.data.firstName + ' ' + res.data.lastName) {
@@ -61,7 +61,8 @@ function App() {
               })
             }
             setCookie('recent_user', recentUser, {
-              path: '/home'
+              path: '/*',
+              maxAge: 60*60*24*7,
             })
             navigate('/home')
           } else {

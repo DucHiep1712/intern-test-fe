@@ -15,7 +15,7 @@ root.render(
     <Router basename='/'>
       <Routes>
         <Route exact={true} path='/' element={<App />} />
-          <Route exact={true} path={localStorage.getItem('user-info') ? '/home' : '/'} element={<Home />} />
+        <Route exact={true} path={localStorage.getItem('user-info') ? '/home' : '/'} element={<Home />} />
         <Route exact={true} path={localStorage.getItem('user-info') ? '/info' : '/'} element={<Info />} />
         <Route exact={true} path={localStorage.getItem('user-info') ? '/classlist' : '/'} element={<Classlist />} />
       </Routes>

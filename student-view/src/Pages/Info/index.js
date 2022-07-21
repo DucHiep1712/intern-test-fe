@@ -1,6 +1,5 @@
 import Navbar from '../../Components/Navbar'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Button } from '../../Components/Button'
 import axios from 'axios'
 import cogoToast from 'cogo-toast'
@@ -9,7 +8,6 @@ import './Info.scss'
 function Info() {
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('user-info')))
     const [modifyInfoButton, setModifyInfoButton] = useState(false)
-    const navigate = useNavigate()
 
     const handleModifyInfoFinish = () => {
         axios
@@ -27,7 +25,7 @@ function Info() {
         localStorage.setItem('user-info', JSON.stringify(userInfo))
         cogoToast.loading('Đang cập nhật...')
         window.setTimeout(() => cogoToast.success('Thành công'), 1300)
-        window.setTimeout(() => navigate('/info'), 1500)
+        window.setTimeout(() => window.location.reload(), 1500)
     }
 
     return (

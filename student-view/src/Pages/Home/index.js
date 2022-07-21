@@ -8,9 +8,8 @@ import 'swiper/css/navigation'
 import './Home.scss'
 
 function Home() {
-    const [cookies, setCookie] = useCookies(['recent_user'])
-    const recentUser = (cookies.recent_user !== undefined ? cookies.recent_user : [])
-    console.log(recentUser)
+    const [cookies, setCookie, removeCookie] = useCookies(['recent_user'])
+    const recentUser = (cookies.recent_user ? cookies.recent_user : [])
 
     return (
         <>

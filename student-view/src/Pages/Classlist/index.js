@@ -1,6 +1,5 @@
 import Navbar from '../../Components/Navbar'
 import { useState, useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import './Classlist.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,7 +16,6 @@ function Classlist() {
     const [modifyOpen, setModifyOpen] = useState(false)
     const [modifyButton, setModifyButton] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem('user-info'))
-    const navigate = useNavigate()
 
     const style = {
         position: 'absolute',
@@ -70,11 +68,12 @@ function Classlist() {
                 phone: currentToggled.phone,
                 role: currentToggled.role,
             })
+        console.log(currentToggled)
         setModifyOpen(false)
         setOpen(false)
         cogoToast.loading('Đang cập nhật...')
         window.setTimeout(() => cogoToast.success('Thành công'), 1300)
-        window.setTimeout(() => navigate('/classlist'), 1500)
+        window.setTimeout(() => window.location.reload(), 1500)
     }
 
     return (

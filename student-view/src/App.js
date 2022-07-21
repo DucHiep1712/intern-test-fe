@@ -11,9 +11,9 @@ import './App.scss'
 
 function App() {
   const [details, setDetails] = useState({ username: '', password: '' })
+  const [cookies, setCookie, removeCookie] = useCookies()
   const [usernameActive, setUsernameActive] = useState(false)
   const [passActive, setPassActive] = useState(false)
-  const [cookies, setCookie] = useCookies(['recent_user']);
   const usernameRef = useRef()
   const passwordRef = useRef()
   const navigate = useNavigate()
@@ -45,25 +45,30 @@ function App() {
                 phone: res.data.phone,
               })
             )
-            let recentUser = []
-            if (cookies.recent_user) {
-              recentUser = cookies.recent_user
-            }
+
+            let recentUser = (cookies.get('recent_user') ? cookies.get('recent_user') : [])
             var today = new Date()
             const logintime = today.getHours() + ':' + today.getMinutes() + ' ngày ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
-            if (!recentUser.find(item => item.name === res.data.firstName + ' ' + res.data.lastName)) {
+
+            if (!recentUser) {
               recentUser = [...recentUser, { name: res.data.firstName + ' ' + res.data.lastName, time: logintime }]
             } else {
-              recentUser.forEach(item => {
-                if (item.name === res.data.firstName + ' ' + res.data.lastName) {
-                  item.time = logintime
-                }
-              })
+              if (!recentUser.find(item => item.name === res.data.firstName + ' ' + res.data.lastName)) {
+                recentUser = [...recentUser, { name: res.data.firstName + ' ' + res.data.lastName, time: logintime }]
+              } else {
+                recentUser.forEach(item => {
+                  if (item.name === res.data.firstName + ' ' + res.data.lastName) {
+                    item.time = logintime
+                  }
+                })
+              }
             }
+
             setCookie('recent_user', recentUser, {
-              path: '/*',
-              maxAge: 60*60*24*7,
+              path: '/',
+              maxAge: 60 * 60 * 24 * 7,
             })
+
             navigate('/home')
           } else {
             cogoToast.error('Tài khoản hoặc mật khẩu không đúng')
